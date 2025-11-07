@@ -69,8 +69,9 @@ CREATE TABLE Producto (
     precio DECIMAL(10,2) NOT NULL,
     stock INT NOT NULL DEFAULT 0,
     estado_id INT NOT NULL,
-    Constraint (id_estado) FOREIGN KEY (estado_id) REFERENCES EstadoProducto(id)
+    CONSTRAINT fk_estado FOREIGN KEY (estado_id) REFERENCES EstadoProducto(id)
 );
+
 
 -- Tabla Pedido
 CREATE TABLE Pedido (
@@ -79,9 +80,10 @@ CREATE TABLE Pedido (
     estado_id INT NOT NULL,
     total DECIMAL(10,2) NOT NULL DEFAULT 0,
     cliente_id VARCHAR(50) NOT NULL,
-    FOREIGN KEY (estado_id) REFERENCES EstadoPedido(id),
-    FOREIGN KEY (cliente_id) REFERENCES Cliente(id)
+    CONSTRAINT fk_estado_pedido FOREIGN KEY (estado_id) REFERENCES EstadoPedido(id),
+    CONSTRAINT fk_cliente_pedido FOREIGN KEY (cliente_id) REFERENCES Cliente(id)
 );
+
 
 -- Tabla ItemPedido
 CREATE TABLE ItemPedido (
@@ -91,9 +93,10 @@ CREATE TABLE ItemPedido (
     cantidad INT NOT NULL,
     precio_unitario DECIMAL(10,2) NOT NULL,
     subtotal DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(id),
-    FOREIGN KEY (producto_id) REFERENCES Producto(id)
+    CONSTRAINT fk_pedido_item FOREIGN KEY (pedido_id) REFERENCES Pedido(id),
+    CONSTRAINT fk_producto_item FOREIGN KEY (producto_id) REFERENCES Producto(id)
 );
+
 
 -- Tabla Pago
 CREATE TABLE Pago (
@@ -103,7 +106,7 @@ CREATE TABLE Pago (
     metodo_id INT NOT NULL,
     estado_id INT NOT NULL,
     pedido_id VARCHAR(50) NOT NULL,
-    FOREIGN KEY (metodo_id) REFERENCES MetodoPago(id),
-    FOREIGN KEY (estado_id) REFERENCES EstadoPago(id),
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(id)
+    CONSTRAINT fk_metodo_pago FOREIGN KEY (metodo_id) REFERENCES MetodoPago(id),
+    CONSTRAINT fk_estado_pago FOREIGN KEY (estado_id) REFERENCES EstadoPago(id),
+    CONSTRAINT fk_pedido_pago FOREIGN KEY (pedido_id) REFERENCES Pedido(id)
 );
